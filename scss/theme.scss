@@ -54,11 +54,13 @@
   }
 }
 
-.is-line-length-full .note-detail-textarea {
-  padding-left: 25px;
-}
-.is-line-length-full .note-detail-preview {
-  padding: 0 25px;
+.is-line-length-full {
+  .note-detail-textarea {
+    padding-left: 25px;
+  }
+  .note-detail-preview {
+    padding: 0 25px;
+  }
 }
 
 .note-content-editor-shell,
