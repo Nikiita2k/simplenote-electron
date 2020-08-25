@@ -27,6 +27,16 @@
   unicode-range: U+E000-E001;
 }
 
+.note-detail-textarea {
+  padding-left: calc((100% - 768px) / 2);
+}
+
+@media only screen and (max-width: 1400px) {
+  .note-detail-textarea {
+    padding-left: 10%;
+  }
+}
+
 .react-monaco-editor-container {
   .scrollbar.vertical {
     width: 10px !important;
@@ -36,6 +46,10 @@
       width: 10px !important;
     }
   }
+}
+
+.is-line-length-full .note-detail-textarea {
+  padding-left: 25px;
 }
 
 .note-content-editor-shell,
