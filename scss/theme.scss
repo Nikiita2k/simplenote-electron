@@ -53,6 +53,11 @@
     }
   }
 }
+// scrollbar search highlights
+.decorationsOverviewRuler {
+  width: 10px !important;
+  right: -2px !important;
+}
 
 .is-line-length-full {
   .note-detail-textarea {
