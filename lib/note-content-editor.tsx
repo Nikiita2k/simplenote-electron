@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef, RefObject } from 'react';
 import { connect } from 'react-redux';
 import Monaco, {
   ChangeHandler,
@@ -62,6 +62,7 @@ type Props = OwnProps & StateProps & DispatchProps;
 
 type OwnState = {
   content: string;
+  contentDiv: RefObject<HTMLDivElement>;
   editor: 'fast' | 'full';
   noteId: T.EntityId | null;
   overTodo: boolean;
@@ -75,6 +76,7 @@ class NoteContentEditor extends Component<Props> {
 
   state: OwnState = {
     content: '',
+    contentDiv: createRef(),
     editor: 'fast',
     noteId: null,
     overTodo: false,
@@ -731,11 +733,25 @@ class NoteContentEditor extends Component<Props> {
   };
 
   render() {
-    const { fontSize, noteId, theme } = this.props;
-    const { content, editor, overTodo } = this.state;
+    const { fontSize, lineLength, noteId, theme } = this.props;
+    const { content, contentDiv, editor, overTodo } = this.state;
+
+    let editorPadding = 25;
+
+    if (lineLength === 'narrow' && contentDiv?.current) {
+      const width = contentDiv?.current?.offsetWidth;
+      if (width <= 1400) {
+        // should be 10% up to 1400px wide
+        editorPadding = width * 0.1;
+      } else {
+        // after 1400, calc((100% - 768px) / 2);
+        editorPadding = (width - 768) / 2;
+      }
+    }
 
     return (
       <div
+        ref={contentDiv}
         className={`note-content-editor-shell${
           overTodo ? ' cursor-pointer' : ''
         }`}
@@ -767,6 +783,7 @@ class NoteContentEditor extends Component<Props> {
                 '"Simplenote Tasks", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif',
               fontSize,
               hideCursorInOverviewRuler: true,
+              lineDecorationsWidth: editorPadding,
               lineHeight: fontSize > 20 ? 42 : 24,
               lineNumbers: 'off',
               links: true,
@@ -777,7 +794,11 @@ class NoteContentEditor extends Component<Props> {
               quickSuggestions: false,
               renderIndentGuides: false,
               renderLineHighlight: 'none',
-              scrollbar: { horizontal: 'hidden', useShadows: false },
+              scrollbar: {
+                horizontal: 'hidden',
+                useShadows: false,
+                verticalScrollbarSize: editorPadding,
+              },
               scrollBeyondLastLine: false,
               selectionHighlight: false,
               wordWrap: 'bounded',

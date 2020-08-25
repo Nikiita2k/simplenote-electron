@@ -27,19 +27,14 @@
   unicode-range: U+E000-E001;
 }
 
-.note-detail {
-  padding: 0 calc((100% - 768px) / 2);
-}
+.react-monaco-editor-container {
+  .scrollbar.vertical {
+    width: 10px !important;
+    right: 0 !important;
 
-@media only screen and (max-width: 1400px) {
-  .note-detail {
-    padding: 0 10%;
-  }
-}
-
-.is-line-length-full {
-  .note-detail {
-    padding: 0 25px;
+    .slider {
+      width: 10px !important;
+    }
   }
 }
 
