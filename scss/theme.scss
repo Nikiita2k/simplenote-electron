@@ -30,10 +30,16 @@
 .note-detail-textarea {
   padding-left: calc((100% - 768px) / 2);
 }
+.note-detail-preview {
+  padding: 0 calc((100% - 768px) / 2);
+}
 
 @media only screen and (max-width: 1400px) {
   .note-detail-textarea {
     padding-left: 10%;
+  }
+  .note-detail-preview {
+    padding: 0 10%;
   }
 }
 
@@ -50,6 +56,9 @@
 
 .is-line-length-full .note-detail-textarea {
   padding-left: 25px;
+}
+.is-line-length-full .note-detail-preview {
+  padding: 0 25px;
 }
 
 .note-content-editor-shell,
