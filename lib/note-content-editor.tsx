@@ -71,6 +71,7 @@ class NoteContentEditor extends Component<Props> {
   bootTimer: ReturnType<typeof setTimeout> | null = null;
   editor: Editor.IStandaloneCodeEditor | null = null;
   monaco: Monaco | null = null;
+  contentDiv: RefObject<HTMLDivElement> = createRef();
   decorations: string[] = [];
 
   state: OwnState = {
@@ -113,7 +114,6 @@ class NoteContentEditor extends Component<Props> {
     }, SPEED_DELAY);
     this.props.storeFocusEditor(this.focusEditor);
     this.props.storeHasFocus(this.hasFocus);
-    this.contentDiv = createRef();
   }
 
   componentWillUnmount() {
@@ -738,7 +738,7 @@ class NoteContentEditor extends Component<Props> {
     let editorPadding = 25;
 
     if (lineLength === 'narrow' && this.contentDiv?.current) {
-      const width = this.contentDiv?.current?.offsetWidth;
+      const width = this.contentDiv.current?.offsetWidth;
       if (width <= 1400) {
         // should be 10% up to 1400px wide
         editorPadding = width * 0.1;
