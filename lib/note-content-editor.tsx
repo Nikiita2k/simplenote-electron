@@ -62,7 +62,6 @@ type Props = OwnProps & StateProps & DispatchProps;
 
 type OwnState = {
   content: string;
-  contentDiv: RefObject<HTMLDivElement>;
   editor: 'fast' | 'full';
   noteId: T.EntityId | null;
   overTodo: boolean;
@@ -76,7 +75,6 @@ class NoteContentEditor extends Component<Props> {
 
   state: OwnState = {
     content: '',
-    contentDiv: createRef(),
     editor: 'fast',
     noteId: null,
     overTodo: false,
@@ -115,6 +113,7 @@ class NoteContentEditor extends Component<Props> {
     }, SPEED_DELAY);
     this.props.storeFocusEditor(this.focusEditor);
     this.props.storeHasFocus(this.hasFocus);
+    this.contentDiv = createRef();
   }
 
   componentWillUnmount() {
@@ -734,12 +733,12 @@ class NoteContentEditor extends Component<Props> {
 
   render() {
     const { fontSize, lineLength, noteId, theme } = this.props;
-    const { content, contentDiv, editor, overTodo } = this.state;
+    const { content, editor, overTodo } = this.state;
 
     let editorPadding = 25;
 
-    if (lineLength === 'narrow' && contentDiv?.current) {
-      const width = contentDiv?.current?.offsetWidth;
+    if (lineLength === 'narrow' && this.contentDiv?.current) {
+      const width = this.contentDiv?.current?.offsetWidth;
       if (width <= 1400) {
         // should be 10% up to 1400px wide
         editorPadding = width * 0.1;
@@ -751,7 +750,7 @@ class NoteContentEditor extends Component<Props> {
 
     return (
       <div
-        ref={contentDiv}
+        ref={this.contentDiv}
         className={`note-content-editor-shell${
           overTodo ? ' cursor-pointer' : ''
         }`}
